@@ -50,11 +50,14 @@ THREAD_TRACE_OUT=$?
 
 rm ${LOG_FILE}
 
+EXIT_VAL=0
+
 if [ $MAKE_OUT -eq "0" ];
 then
 	MAKE_PRINT="PASS"
 else
 	MAKE_PRINT="FAIL"
+	EXIT_VAL=$(($EXIT_VAL + (1<<2)))
 fi
 
 if [ $LEAK_TEST_OUT -eq "0" ];
@@ -62,6 +65,7 @@ then
 	LEAK_PRINT="PASS"
 else
 	LEAK_PRINT="FAIL"
+	EXIT_VAL=$(($EXIT_VAL + (1<<1)))
 fi
 
 if [ $THREAD_TRACE_OUT -eq "0" ];
@@ -69,11 +73,13 @@ then
 	THREAD_PRINT="PASS"
 else
 	THREAD_PRINT="FAIL"
+	EXIT_VAL=$(($EXIT_VAL + 1))
 fi
 
 echo "	Compilation	Memory leaks	Thread race"
 echo "	 ${MAKE_PRINT}	 	 ${LEAK_PRINT}	 	 ${THREAD_PRINT}"
 
-EXIT_VAL=$(((MAKE_OUT<<2) + (LEAK_TEST_OUT<<1) + THREAD_TRACE_OUT))
+#EXIT_VAL=$(((MAKE_OUT<<2) + (LEAK_TEST_OUT<<1) + THREAD_TRACE_OUT))
 
+echo "exit value is $EXIT_VAL"
 exit $EXIT_VAL
