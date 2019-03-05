@@ -81,5 +81,5 @@ echo "	 ${MAKE_PRINT}	 	 ${LEAK_PRINT}	 	 ${THREAD_PRINT}"
 
 #EXIT_VAL=$(((MAKE_OUT<<2) + (LEAK_TEST_OUT<<1) + THREAD_TRACE_OUT))
 
-echo "exit value is $EXIT_VAL"
+#echo "exit value is $EXIT_VAL"
 exit $EXIT_VAL
